@@ -43,7 +43,7 @@ public class BrowserFactory {
         Capabilities caps = ((RemoteWebDriver) driver).getCapabilities();
         String browserName = caps.getBrowserName();
         String browserVersion = caps.getBrowserVersion();
-        log.info("Browser: " + browserName + " Version: " + browserVersion + "Browser Mode: " + browserMode);
+        log.info("Browser: " + browserName + " Version: " + browserVersion + "Mode: " + browserMode);
     }
 
     public WebDriver getDriver() {
