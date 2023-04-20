@@ -93,7 +93,7 @@
                 <configuration>
                     <testFailureIgnore>true</testFailureIgnore>
                     <argLine>
-                        -javaagent:https://repo1.maven.org/maven2/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar
+                        -javaagent:https://repo1.maven.org/maven2/org/codehaus/mojo/aspectj-maven-plugin/1.14.0/aspectj-maven-plugin-1.14.0.jar
                     </argLine>
                     <properties>
                         <property>
