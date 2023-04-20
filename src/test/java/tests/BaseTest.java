@@ -45,7 +45,7 @@ public class BaseTest {
             log.info("Driver quit");
         }
     }
-    
+
     private void initPage(Object object, WebDriver driver, WebDriverWait wait) {
         Class<?> clazz = object.getClass().getSuperclass();
         for (Field field : clazz.getDeclaredFields()) {
@@ -53,10 +53,10 @@ public class BaseTest {
                 Class<?>[] type = {WebDriver.class, WebDriverWait.class};
                 try {
                     field.set(this, field.getType().getConstructor(type).newInstance(driver, wait));
-                    log.info("Call constructor for playwright page with name: " + field.getName());
+                    log.info("Call constructor for selenium page with name: " + field.getName());
                 } catch (IllegalAccessException | InstantiationException | InvocationTargetException |
                          NoSuchMethodException e) {
-                    log.info("Did not manage to call constructor for playwright page with name " + field.getName());
+                    log.info("Did not manage to call constructor for selenium page with name " + field.getName());
                 }
             }
         }
