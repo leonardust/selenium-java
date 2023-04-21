@@ -104,6 +104,11 @@ jobs:
           path: target/allure-report/
           retention-days: 30
 
+  write_summary:
+    needs: build
+    runs-on: ubuntu-latest
+    if: always()
+    steps:
       - name: Write summary
         if: always()
         run: |
