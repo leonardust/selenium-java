@@ -66,7 +66,10 @@ jobs:
         run: mvn clean install package --file pom.xml
 
       - name: Run tests
-        run: mvn test -Dbrowser=${{github.event.inputs.browser || 'chrome'}} -Dheadless=${{github.event.inputs.browser_mode || 'headless'}}
+        run: |
+          mvn test -Dbrowser=${{github.event.inputs.browser || 'chrome'}} -Dheadless=${{github.event.inputs.browser_mode || 'headless'}}
+          version=$(echo "$(<target/surefire-reports/*.txt)" | grep -oP '(?<=Browser Version: )[0-9.]+')
+          echo "::set-output name=browser_version::$version"
 
       - name: Get Allure history
         uses: actions/checkout@v3
@@ -107,6 +110,7 @@ jobs:
         if: always()
         run: |
           echo "- Browser: $BROWSER" >> $GITHUB_STEP_SUMMARY
+          echo "- Version: ${{steps.run-tests.outputs.browser_version}}" >> $GITHUB_STEP_SUMMARY
           echo "- Mode: $BROWSER_MODE" >> $GITHUB_STEP_SUMMARY
 
 # todo: understand this
