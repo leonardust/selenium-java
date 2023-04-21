@@ -108,7 +108,7 @@ jobs:
         if: always()
         run: |
           echo "- Browser: $BROWSER" >> $GITHUB_STEP_SUMMARY
-          echo "- Version: ${{outputs.version}}" >> $GITHUB_STEP_SUMMARY
+          echo "- Version: ${{jobs.build.outputs.version}}" >> $GITHUB_STEP_SUMMARY
           echo "- Mode: $BROWSER_MODE" >> $GITHUB_STEP_SUMMARY
 
 # todo: understand this
