@@ -104,7 +104,7 @@ jobs:
           retention-days: 30
 
       - name: Write summary
-        if: (always)
+        if: always()
         run: |
           echo "- Browser: ${{github.event.inputs.browser}} >> $GITHUB_STEP_SUMMARY
           echo "- Mode: ${{github.event.inputs.browser_mode}} >> $GITHUB_STEP_SUMMARY
