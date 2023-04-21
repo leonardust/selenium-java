@@ -32,20 +32,13 @@ on:
   pull_request:
     branches: [ "main" ]
   schedule:
-    - cron: '10 10 * * *'
+    - cron: '* * * * *'
 
 env:
   BROWSER: ${{ github.event.inputs.browser || 'chrome' }}
   BROWSER_MODE: ${{ github.event.inputs.browser_mode || 'headless' }}
 
 jobs:
-
-  trigger:
-    name: Trigger
-    runs-on: ubuntu-latest
-    steps:
-      - name: cron job trigger
-        run: echo "Fire and Forget"
 
   build:
 
