@@ -10,14 +10,39 @@ name: Selenium Tests
 
 on:
   workflow_dispatch:
+    inputs:
+      browser:
+        type: choice
+        description: Select browser
+        default: chrome
+        options:
+          - chrome
+          - firefox
+          - edge
+
+      browser_mode:
+        type: choice
+        description: Select browser mode
+        default: headless
+        options:
+          - headless
+          - headed
   push:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
   schedule:
-    - cron: '35 9 * * *'
+    - cron: '10 10 * * *'
 
 jobs:
+
+  trigger:
+    name: Trigger
+    runs-on: ubuntu-latest
+    steps:
+      - name: cron job trigger
+        run: echo "Fire and Forget"
+
   build:
 
     runs-on: ubuntu-latest
@@ -37,7 +62,7 @@ jobs:
         run: mvn clean install package --file pom.xml
 
       - name: Run tests
-        run: mvn test
+        run: mvn test -Dbrowser${{ inputs.browser }} -Dheadless${{ inputs.browser_mode }}
 
       - name: Get Allure history
         uses: actions/checkout@v3
