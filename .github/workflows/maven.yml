@@ -38,21 +38,14 @@ env:
   BROWSER: ${{ github.event.inputs.browser || 'chrome' }}
   BROWSER_MODE: ${{ github.event.inputs.browser_mode || 'headless' }}
 
-outputs:
-  version: ${{ steps.get_version.outputs.version }}
-
 jobs:
-
-  trigger:
-    name: Trigger
-    runs-on: ubuntu-latest
-    steps:
-      - name: cron job trigger
-        run: echo "Fire and Forget"
 
   build:
 
     runs-on: ubuntu-latest
+
+    outputs:
+      version: ${{ steps.get_version.outputs.version }}
 
     steps:
       - name: checkout
