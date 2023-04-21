@@ -66,7 +66,7 @@ jobs:
         run: mvn clean install package --file pom.xml
 
       - name: Run tests
-        run: mvn test -Dbrowser=${{ ${{ github.event.inputs.browser || 'chrome' }} }} -Dheadless=${{ ${{ github.event.inputs.browser_mode || 'headless' }} }}
+        run: mvn test -Dbrowser=${{github.event.inputs.browser || 'chrome'}} -Dheadless=${{github.event.inputs.browser_mode || 'headless'}}
 
       - name: Get Allure history
         uses: actions/checkout@v3
