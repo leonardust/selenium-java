@@ -68,7 +68,7 @@ jobs:
       - name: Run tests
         run: |
           mvn test -Dbrowser=${{github.event.inputs.browser || 'chrome'}} -Dheadless=${{github.event.inputs.browser_mode || 'headless'}}
-          version=$(echo "$(<target/surefire-reports/*.txt)" | grep -oP '(?<=Browser Version: )[0-9.]+')
+          version=$(echo "$(<target/surefire-reports/TEST-tests.*.xml)" | grep -oP '(?<=Version: )[0-9.]+')
           echo "::set-output name=browser_version::$version"
 
       - name: Get Allure history
