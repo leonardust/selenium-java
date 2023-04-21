@@ -106,8 +106,8 @@ jobs:
       - name: Write summary
         if: always()
         run: |
-          echo "- Browser: ${{github.event.inputs.browser}} >> $GITHUB_STEP_SUMMARY
-          echo "- Mode: ${{github.event.inputs.browser_mode}} >> $GITHUB_STEP_SUMMARY
+          echo "- Browser: ${{github.event.inputs.browser}}" >> $GITHUB_STEP_SUMMARY
+          echo "- Mode: ${{github.event.inputs.browser_mode}}" >> $GITHUB_STEP_SUMMARY
 
 # todo: understand this
 # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
