@@ -40,12 +40,16 @@ env:
 
 jobs:
 
+  trigger:
+    name: Trigger
+    runs-on: ubuntu-latest
+    steps:
+      - name: cron job trigger
+        run: echo "Fire and Forget"
+
   build:
 
     runs-on: ubuntu-latest
-
-    outputs:
-      version: ${{ steps.get_version.outputs.version }}
 
     steps:
       - name: checkout
@@ -62,12 +66,7 @@ jobs:
         run: mvn clean install package --file pom.xml
 
       - name: Run tests
-        run: |
-          mvn test -Dbrowser=${{github.event.inputs.browser || 'chrome'}} -Dheadless=${{github.event.inputs.browser_mode || 'headless'}}
-
-      - name: Get version number
-        run: echo "::set-output name=version::$(grep -oP 'Version:\s*\K[^\n]*' logfile.txt)"
-        id: get_version
+        run: mvn test -Dbrowser=${{github.event.inputs.browser || 'chrome'}} -Dheadless=${{github.event.inputs.browser_mode || 'headless'}}
 
       - name: Get Allure history
         uses: actions/checkout@v3
@@ -104,18 +103,11 @@ jobs:
           path: target/allure-report/
           retention-days: 30
 
-  write_summary:
-    needs: build
-    runs-on: ubuntu-latest
-    if: always()
-    steps:
       - name: Write summary
         if: always()
         run: |
           echo "- Browser: $BROWSER" >> $GITHUB_STEP_SUMMARY
-          echo "- Version: ${{jobs.build.outputs.version}}" >> $GITHUB_STEP_SUMMARY
           echo "- Mode: $BROWSER_MODE" >> $GITHUB_STEP_SUMMARY
-
 # todo: understand this
 # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
 #    - name: Update dependency graph
