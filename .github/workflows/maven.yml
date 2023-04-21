@@ -38,6 +38,9 @@ env:
   BROWSER: ${{ github.event.inputs.browser || 'chrome' }}
   BROWSER_MODE: ${{ github.event.inputs.browser_mode || 'headless' }}
 
+outputs:
+  version: ${{ steps.get_version.outputs.version }}
+
 jobs:
 
   trigger:
@@ -68,8 +71,10 @@ jobs:
       - name: Run tests
         run: |
           mvn test -Dbrowser=${{github.event.inputs.browser || 'chrome'}} -Dheadless=${{github.event.inputs.browser_mode || 'headless'}}
-          version=$(echo "$(<target/surefire-reports/TEST-tests.*.xml)" | grep -oP '(?<=Version: )[0-9.]+')
-          echo "::set-output name=browser_version::$version"
+
+      - name: Get version number
+        run: echo "::set-output name=version::$(grep -oP 'Version:\s*\K[^\n]*' logfile.txt)"
+        id: get_version
 
       - name: Get Allure history
         uses: actions/checkout@v3
@@ -110,7 +115,7 @@ jobs:
         if: always()
         run: |
           echo "- Browser: $BROWSER" >> $GITHUB_STEP_SUMMARY
-          echo "- Version: ${{steps.run-tests.outputs.browser_version}}" >> $GITHUB_STEP_SUMMARY
+          echo "- Version: ${{outputs.version}}" >> $GITHUB_STEP_SUMMARY
           echo "- Mode: $BROWSER_MODE" >> $GITHUB_STEP_SUMMARY
 
 # todo: understand this
