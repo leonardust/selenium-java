@@ -101,6 +101,7 @@ jobs:
         run: |
           echo "- Browser: $BROWSER" >> $GITHUB_STEP_SUMMARY
           echo "- Mode: $BROWSER_MODE" >> $GITHUB_STEP_SUMMARY
+          echo "- [Allure Report](https://leonardust.github.io/selenium-java/)" >> $GITHUB_STEP_SUMMARY
 # todo: understand this
 # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
 #    - name: Update dependency graph
