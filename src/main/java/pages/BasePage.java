@@ -21,17 +21,17 @@ public class BasePage {
         this.wait = wait;
     }
 
-    private WebDriverWait getWait(Long timeout) {
-        return new WebDriverWait(driver, Duration.ofSeconds(timeout));
+    private WebDriverWait getWait() {
+        return new WebDriverWait(driver, Duration.ofSeconds(5L));
     }
 
     public WebElement getElementLocatedBy(By locator) {
-        getWait(5L).until(ExpectedConditions.visibilityOfElementLocated(locator));
+        getWait().until(ExpectedConditions.visibilityOfElementLocated(locator));
         return driver.findElement(locator);
     }
 
     public List<WebElement> getElementsLocatedBy(By locator) {
-        getWait(5L).until(ExpectedConditions.visibilityOfAllElementsLocatedBy((locator)));
+        getWait().until(ExpectedConditions.visibilityOfAllElementsLocatedBy((locator)));
         return driver.findElements(locator);
     }
 

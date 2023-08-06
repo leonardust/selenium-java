@@ -1,5 +1,6 @@
 package services;
 
+import exceptions.EnvironmentReaderServiceException;
 import lombok.extern.java.Log;
 
 import java.io.IOException;
@@ -7,6 +8,8 @@ import java.util.Properties;
 
 @Log
 public class EnvironmentReaderService {
+    private EnvironmentReaderService() {
+    }
 
     private static final Properties props = new Properties();
 
@@ -20,8 +23,7 @@ public class EnvironmentReaderService {
         try {
             props.load(EnvironmentReaderService.class.getClassLoader().getResourceAsStream(filePath));
         } catch (IOException e) {
-            log.info("Did not manage to read properties file");
-            throw new RuntimeException();
+            throw new EnvironmentReaderServiceException("Did not manage to read properties file");
         }
     }
 

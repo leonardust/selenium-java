@@ -2,6 +2,7 @@ package tests;
 
 import annotations.SeleniumPage;
 import browserfactory.BrowserFactory;
+import lombok.Getter;
 import lombok.extern.java.Log;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,6 +17,7 @@ import services.EnvironmentReaderService;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 
+@Getter
 @Log
 public class BaseTest {
 
@@ -60,10 +62,6 @@ public class BaseTest {
                 }
             }
         }
-    }
-
-    public WebDriver getDriver() {
-        return driver;
     }
 
 }

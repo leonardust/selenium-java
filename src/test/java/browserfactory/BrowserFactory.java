@@ -1,5 +1,6 @@
 package browserfactory;
 
+import lombok.Getter;
 import lombok.extern.java.Log;
 import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.WebDriver;
@@ -12,8 +13,10 @@ import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import services.EnvironmentReaderService;
 
+@Getter
 @Log
 public class BrowserFactory {
+
     private final WebDriver driver;
 
     public BrowserFactory() {
@@ -21,33 +24,28 @@ public class BrowserFactory {
         String browserMode = System.getProperty("browser.mode") != null ? System.getProperty("browser.mode") : EnvironmentReaderService.getProperty("browser.mode");
 
         switch (browser) {
-            case "firefox":
+            case "firefox" -> {
                 FirefoxOptions firefoxOptions = new FirefoxOptions();
                 firefoxOptions.addArguments(browserMode);
                 driver = new FirefoxDriver(firefoxOptions);
-                break;
-            case "chrome":
+            }
+            case "chrome" -> {
                 ChromeOptions chromeOptions = new ChromeOptions();
                 chromeOptions.addArguments(browserMode);
                 driver = new ChromeDriver(chromeOptions);
-                break;
-            case "edge":
+            }
+            case "edge" -> {
                 EdgeOptions edgeOptions = new EdgeOptions();
                 edgeOptions.addArguments(browserMode);
                 driver = new EdgeDriver(edgeOptions);
-                break;
-            default:
-                throw new IllegalArgumentException("Invalid browser value: " + browser);
+            }
+            default -> throw new IllegalArgumentException("Invalid browser value: " + browser);
         }
 
         Capabilities caps = ((RemoteWebDriver) driver).getCapabilities();
         String browserName = caps.getBrowserName();
         String browserVersion = caps.getBrowserVersion();
         log.info("Browser: " + browserName + " Version: " + browserVersion + " Mode: " + browserMode);
-    }
-
-    public WebDriver getDriver() {
-        return driver;
     }
 
 }
